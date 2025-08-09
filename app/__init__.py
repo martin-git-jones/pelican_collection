@@ -1,20 +1,24 @@
 from flask import Flask
 from .extensions import db
-from .config import Config
 
 def create_app():
     app = Flask(__name__)
-    app.config.from_object(Config)
 
-    # Init extensions
+    # Configuration
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///pelican_collection.db'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+    # Initialize extensions
     db.init_app(app)
 
-    # Blueprints
-    from .books.routes import books_bp
-    app.register_blueprint(books_bp, url_prefix="/books")
+    # Import models so db.create_all() knows them
+    from . import models
+    with app.app_context():
+        db.create_all()
 
-    @app.route("/")
-    def index():
-        return "Pelican Collection Home"
+    # Register blueprints
+    from .routes import main
+    app.register_blueprint(main)
 
     return app
+

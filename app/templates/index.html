@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Pelican Collection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .book {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+        }
+        .book img {
+            max-height: 120px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pelican Collection</h1>
+
+    {% if books %}
+        {% for book in books %}
+            <div class="book">
+                {% if book.image_url %}
+                    <img src="{{ book.image_url }}" alt="{{ book.title }}">
+                {% endif %}
+                <h3>{{ book.title }}</h3>
+                <p><strong>Author:</strong> {{ book.author }}</p>
+                {% if book.publication_date %}<p><strong>Published:</strong> {{ book.publication_date }}</p>{% endif %}
+                {% if book.purchase_cost %}<p><strong>Cost:</strong> £{{ "%.2f"|format(book.purchase_cost) }}</p>{% endif %}
+                {% if book.condition %}<p><strong>Condition:</strong> {{ book.condition }}</p>{% endif %}
+                {% if book.notes %}<p><strong>Notes:</strong> {{ book.notes }}</p>{% endif %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No books in collection yet.</p>
+    {% endif %}
+</body>
+</html>
+
