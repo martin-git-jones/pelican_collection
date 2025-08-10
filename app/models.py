@@ -1,19 +1,13 @@
-from .extensions import db
-from datetime import datetime
+from app.extensions import db
 
 class PelicanBook(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(200), nullable=False)
-    author = db.Column(db.String(120), nullable=False)
-    publication_date = db.Column(db.String(50))  # Store as string like "1963" or "July 2010"
-    image_url = db.Column(db.String(300))
-    purchase_cost = db.Column(db.Float)
-    date_purchased = db.Column(db.Date)
-    condition = db.Column(db.String(50))
-    notes = db.Column(db.Text)
-
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    number = db.Column(db.String(10), nullable=False)  # e.g. "A1"
+    title = db.Column(db.String(255), nullable=False)
+    owned = db.Column(db.Boolean, default=False)
+    image = db.Column(db.String(255))
+    note = db.Column(db.Text)
 
     def __repr__(self):
-        return f"<PelicanBook {self.title}>"
+        return f"<PelicanBook {self.number} - {self.title}>"
 

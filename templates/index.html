@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+<head>
+    <title>My Pelican Collection</title>
+</head>
+<body>
+    <h1>Pelican Books</h1>
+    <ul>
+    {% for book in books %}
+        <li>
+            <strong>{{ book.title }}</strong>
+            {% if book.author %} by {{ book.author }}{% endif %}
+            {% if book.image %}<br><img src="{{ book.image }}" alt="{{ book.title }}" width="100">{% endif %}
+            <p>{{ book.note }}</p>
+        </li>
+    {% endfor %}
+    </ul>
+</body>
+</html>
+

@@ -1,24 +1,15 @@
 from flask import Flask
-from .extensions import db
+from .extensions import db, migrate
 
 def create_app():
     app = Flask(__name__)
+    app.config.from_object("config.Config")
 
-    # Configuration
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///pelican_collection.db'
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-    # Initialize extensions
     db.init_app(app)
+    migrate.init_app(app, db)
 
-    # Import models so db.create_all() knows them
-    from . import models
-    with app.app_context():
-        db.create_all()
-
-    # Register blueprints
-    from .routes import main
-    app.register_blueprint(main)
+    from . import routes
+    app.register_blueprint(routes.bp)
 
     return app
 
