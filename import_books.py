@@ -11,7 +11,8 @@ with app.app_context():
         for row in reader:
             # Avoid duplicates based on "number"
             existing = PelicanBook.query.filter_by(number=row['number']).first()
-            if not existing:
+            #if not existing:
+            if 1 == 1:
                 book = PelicanBook(
                     number=row['number'],
                     title=row['title'],

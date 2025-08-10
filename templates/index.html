@@ -91,7 +91,7 @@
 
         <div id="bookList">
             {% for book in books %}
-                <div class="book" data-title="{{ book.title | lower }}" data-author="{{ book.author | lower }}" data-owned="{{ book.owned }}">
+                <div class="book" data-number="{{ book.number | lower }}" data-title="{{ book.title | lower }}" data-author="{{ book.author | lower }}" data-owned="{{ book.owned }}">
                     {% if book.image %}
                         <img src="{{ book.image }}" alt="{{ book.title }}">
                     {% endif %}
@@ -123,6 +123,7 @@
 
             Array.from(bookList).forEach(book => {
                 const matchesSearch =
+                    book.dataset.number.includes(searchTerm) ||
                     book.dataset.title.includes(searchTerm) ||
                     book.dataset.author.includes(searchTerm);
                 const matchesOwned = !ownedValue || book.dataset.owned === ownedValue;

@@ -1,0 +1,7 @@
+ rm pelicans.db
+ rm -rf migrations/
+ flask db init
+ flask db migrate -m "Initial migration"
+ flask db upgrade
+ python3 import_books.py 
+
