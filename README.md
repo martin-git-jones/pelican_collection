@@ -1,55 +1,71 @@
-# Pelican Collection Website
+# Pelican Book Collection
 
-A personal website for cataloguing my **Pelican Books** collection, built with **Python** and **Flask**.  
-This project is designed to be:
-- Visually appealing and user-friendly.
-- Modular and easily extended with new features over time.
-- A public example of my development skills for job applications.
-- A transparent record of how I use **ChatGPT** to assist in software development.
+A Flask web application to catalog and display my collection of Pelican Books.
+Includes:
+- Search by title or author
+- Filter by ownership status
+- Responsive, clean design
 
-You can see the existing basic list here (WordPress version):  
-[http://mailpony.uk/wordpress/pelicans/](http://mailpony.uk/wordpress/pelicans/)
+This project was developed collaboratively with ChatGPT as a coding assistant.
+I documented each step of the process in the `/docs` folder.
 
----
+## Features
+- Python + Flask backend
+- SQLite database via SQLAlchemy
+- CSV import for bulk book entry
+- Search & filter interface
+- Mobile-friendly layout
 
-## Features (Planned and Implemented)
+## Getting Started
+1. Clone this repo:
+git clone https://github.com/martin-git-jones/pelican_collection.git
 
-### ✅ Implemented
-- Flask application scaffold using **app factory** pattern.
-- Modular folder structure with **Blueprints**.
-- SQLite database via **SQLAlchemy ORM**.
-- Example `Book` model with fields:
-  - Title
-  - Author
-  - Publication Date
-  - Image
-  - Purchase Cost
-  - Date Purchased
-  - Condition
-  - Notes
-- Simple “list books” route and HTML template.
+2. Install dependencies:
+pip install -r requirements.txt
 
-### 🚧 Planned
-- CRUD operations for books (Add, Edit, Delete).
-- Book cover image upload and storage.
-- Search and filter functionality.
-- Modern responsive UI (Bootstrap or Tailwind CSS).
-- REST API endpoints for book data.
-- Authentication for editing features.
-- Data import/export (CSV, JSON).
-- Unit tests under `/tests`.
+3. Initialize the database:
+flask db upgrade
 
----
+4. Import books from CSV:
+flask run
 
-## Technology Stack
-- **Backend:** Python, Flask
-- **Database:** SQLite (dev) → PostgreSQL/MySQL (prod option)
-- **Frontend:** Jinja2 templates, Bootstrap/Tailwind (planned)
-- **ORM:** SQLAlchemy
-- **Environment:** Configurable via `.env` or environment variables
-- **Version Control:** Git + GitHub
+Developed with ChatGPT
 
----
+This project was built in close collaboration with ChatGPT as an AI coding partner.
+The process followed an iterative, test-driven approach:
 
-##
+    Defining the goal – I explained the vision: a searchable, filterable, visually clean web app to catalog my Pelican Book collection, starting from a CSV file.
 
+    Incremental development – ChatGPT generated small, focused code snippets for each step:
+
+        Setting up a Flask app and SQLite database with SQLAlchemy models
+
+        Creating a CSV import script
+
+        Building routes and Jinja templates for displaying books
+
+        Adding instant client-side search and filtering
+
+        Styling with responsive, modern CSS
+
+    Debugging together – When errors occurred (e.g., missing imports, database schema mismatches), I shared the traceback and ChatGPT helped identify and fix the problem.
+
+    Feature expansion – We added enhancements like a search bar, ownership filter, and flexible layout.
+
+    Documentation and polish – I asked ChatGPT to create documentation, clean code, and suggest usability improvements.
+
+By working this way, I was able to:
+
+    Ship a fully functional application much faster
+
+    Maintain full understanding of the codebase
+
+    Learn new Flask, SQLAlchemy, and front-end techniques in the process
+
+This project demonstrates my ability to:
+
+    Break down requirements into manageable tasks
+
+    Collaborate with AI tools effectively
+
+    Build clean, maintainable, and user-friendly applications from scratch

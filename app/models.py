@@ -2,7 +2,7 @@ from app.extensions import db
 
 class PelicanBook(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    number = db.Column(db.String(10), nullable=False)  # e.g. "A1"
+    number = db.Column(db.String(10), nullable=True)  # e.g. "A1"
     title = db.Column(db.String(255), nullable=False)
     owned = db.Column(db.Boolean, default=False)
     image = db.Column(db.String(255))

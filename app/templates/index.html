@@ -1,47 +1,139 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Pelican Collection</title>
+    <title>My Pelican Collection</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: auto;
-            padding: 20px;
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            background: #f4f4f9;
+            margin: 0;
+            padding: 0;
         }
+
+        header {
+            background: #004d40;
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
         h1 {
-            color: #2c3e50;
+            margin: 0;
         }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            padding: 1rem;
+        }
+
+        .search-filter {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-filter input,
+        .search-filter select {
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            flex: 1;
+        }
+
         .book {
-            border-bottom: 1px solid #ddd;
-            padding: 10px 0;
+            background: white;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
         }
+
         .book img {
-            max-height: 120px;
+            max-width: 80px;
+            border-radius: 4px;
+        }
+
+        .book-details {
+            flex: 1;
+        }
+
+        .book-details h2 {
+            margin: 0 0 0.3rem 0;
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .book-details p {
+            margin: 0.2rem 0;
         }
     </style>
 </head>
 <body>
-    <h1>Pelican Collection</h1>
+    <header>
+        <h1>Pelican Book Collection</h1>
+    </header>
 
-    {% if books %}
-        {% for book in books %}
-            <div class="book">
-                {% if book.image_url %}
-                    <img src="{{ book.image_url }}" alt="{{ book.title }}">
-                {% endif %}
-                <h3>{{ book.title }}</h3>
-                <p><strong>Author:</strong> {{ book.author }}</p>
-                {% if book.publication_date %}<p><strong>Published:</strong> {{ book.publication_date }}</p>{% endif %}
-                {% if book.purchase_cost %}<p><strong>Cost:</strong> £{{ "%.2f"|format(book.purchase_cost) }}</p>{% endif %}
-                {% if book.condition %}<p><strong>Condition:</strong> {{ book.condition }}</p>{% endif %}
-                {% if book.notes %}<p><strong>Notes:</strong> {{ book.notes }}</p>{% endif %}
-            </div>
-        {% endfor %}
-    {% else %}
-        <p>No books in collection yet.</p>
-    {% endif %}
+    <div class="container">
+
+        <div class="search-filter">
+            <input type="text" id="searchBox" placeholder="Search by title or author">
+            <select id="ownedFilter">
+                <option value="">All</option>
+                <option value="Yes">Owned</option>
+                <option value="No">Not Owned</option>
+            </select>
+        </div>
+
+        <div id="bookList">
+            {% for book in books %}
+                <div class="book" data-title="{{ book.title | lower }}" data-author="{{ book.author | lower }}" data-owned="{{ book.owned }}">
+                    {% if book.image %}
+                        <img src="{{ book.image }}" alt="{{ book.title }}">
+                    {% endif %}
+                    <div class="book-details">
+                        <h2>{{ book.number }} — {{ book.title }}</h2>
+                        {% if book.author %}
+                            <p><strong>Author:</strong> {{ book.author }}</p>
+                        {% endif %}
+                        {% if book.owned %}
+                            <p><strong>Owned:</strong> {{ book.owned }}</p>
+                        {% endif %}
+                        {% if book.note %}
+                            <p><strong>Notes:</strong> {{ book.note }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        const searchBox = document.getElementById('searchBox');
+        const ownedFilter = document.getElementById('ownedFilter');
+        const bookList = document.getElementById('bookList').children;
+
+        function filterBooks() {
+            const searchTerm = searchBox.value.toLowerCase();
+            const ownedValue = ownedFilter.value;
+
+            Array.from(bookList).forEach(book => {
+                const matchesSearch =
+                    book.dataset.title.includes(searchTerm) ||
+                    book.dataset.author.includes(searchTerm);
+                const matchesOwned = !ownedValue || book.dataset.owned === ownedValue;
+
+                book.style.display = matchesSearch && matchesOwned ? 'flex' : 'none';
+            });
+        }
+
+        searchBox.addEventListener('input', filterBooks);
+        ownedFilter.addEventListener('change', filterBooks);
+    </script>
 </body>
 </html>
 
